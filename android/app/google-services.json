@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "430718950022",
+    "project_id": "green-cart-fl",
+    "storage_bucket": "green-cart-fl.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:430718950022:android:544a0cfd54db6b860c0f07",
+        "android_client_info": {
+          "package_name": "com.greencart.sa"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "430718950022-vmvsnvbch908mv2et8nt0p2lq1pm6el1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.greencart.sa",
+            "certificate_hash": "ac133c30805c007a6a0ebe4088336930e49b65c7"
+          }
+        },
+        {
+          "client_id": "430718950022-g5t1sjligmd5jl3nqf8fjgir1m8j9pcm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD2nu-yH8BT2Du4fX20tltcQpsrpMIobDA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "430718950022-g5t1sjligmd5jl3nqf8fjgir1m8j9pcm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
