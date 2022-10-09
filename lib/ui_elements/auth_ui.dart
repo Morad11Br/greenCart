@@ -21,9 +21,9 @@ class AuthScreen {
               width: DeviceInfo(context).width,
               color: MyTheme.accent_color,
               alignment: Alignment.topRight,
-              child: Image.asset(
-                "assets/background_1.png",
-              ),
+              // child: Image.asset(
+              //   "assets/background_1.png",
+              // ),
             ),
             CustomScrollView(
               //controller: _mainScrollController,

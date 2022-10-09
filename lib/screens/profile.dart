@@ -97,27 +97,27 @@ class _ProfileState extends State<Profile> {
   }
 
   String counterText(String txt, {default_length = 3}) {
-    var blank_zeros = default_length == 3 ? "000" : "00";
-    var leading_zeros = "";
+    var blankZeros = default_length == 3 ? "000" : "00";
+    var leadingZeros = "";
     if (txt != null) {
       if (default_length == 3 && txt.length == 1) {
-        leading_zeros = "00";
+        leadingZeros = "00";
       } else if (default_length == 3 && txt.length == 2) {
-        leading_zeros = "0";
+        leadingZeros = "0";
       } else if (default_length == 2 && txt.length == 1) {
-        leading_zeros = "0";
+        leadingZeros = "0";
       }
     }
 
     var newtxt = (txt == null || txt == "" || txt == null.toString())
-        ? blank_zeros
+        ? blankZeros
         : txt;
 
     // print(txt + " " + default_length.toString());
     // print(newtxt);
 
     if (default_length > txt.length) {
-      newtxt = leading_zeros + newtxt;
+      newtxt = leadingZeros + newtxt;
     }
     //print(newtxt);
 
@@ -161,13 +161,14 @@ class _ProfileState extends State<Profile> {
       child: Stack(
         children: [
           Container(
-              height: DeviceInfo(context).height / 1.6,
-              width: DeviceInfo(context).width,
-              color: MyTheme.accent_color,
-              alignment: Alignment.topRight,
-              child: Image.asset(
-                "assets/background_1.png",
-              )),
+            height: DeviceInfo(context).height / 1.6,
+            width: DeviceInfo(context).width,
+            color: MyTheme.accent_color,
+            alignment: Alignment.topRight,
+            // child: Image.asset(
+            //   "assets/background_1.png",
+            // ),
+          ),
           Scaffold(
             backgroundColor: Colors.transparent,
             appBar: PreferredSize(
@@ -181,9 +182,15 @@ class _ProfileState extends State<Profile> {
                         margin: EdgeInsets.only(right: 18),
                         height: 30,
                         child: InkWell(
-                            onTap: (){
+                            onTap: () {
                               Navigator.pop(context);
-                            }, child: Icon(Icons.close,color: MyTheme.white,size: 20,)),),
+                            },
+                            child: Icon(
+                              Icons.close,
+                              color: MyTheme.white,
+                              size: 20,
+                            )),
+                      ),
                     ),
 
                     // Container(
@@ -209,7 +216,6 @@ class _ProfileState extends State<Profile> {
                 slivers: [
                   SliverList(
                     delegate: SliverChildListDelegate([
-
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 18.0),
                         child: buildCountersRow(),
@@ -316,12 +322,9 @@ class _ProfileState extends State<Profile> {
             height: 40,
             child: TextButton(
               onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) {
-                      return DigitalProducts(
-
-                      );
-                    }));
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return DigitalProducts();
+                }));
               },
               style: TextButton.styleFrom(
                   splashFactory: NoSplash.splashFactory,
@@ -355,11 +358,9 @@ class _ProfileState extends State<Profile> {
             height: 40,
             child: TextButton(
               onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) {
-                      return AuctionProducts(
-                      );
-                    }));
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return AuctionProducts();
+                }));
               },
               style: TextButton.styleFrom(
                   splashFactory: NoSplash.splashFactory,
@@ -393,12 +394,9 @@ class _ProfileState extends State<Profile> {
             height: 40,
             child: TextButton(
               onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) {
-                      return WholeSaleProducts(
-
-                      );
-                    }));
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return WholeSaleProducts();
+                }));
               },
               style: TextButton.styleFrom(
                   splashFactory: NoSplash.splashFactory,
@@ -432,12 +430,11 @@ class _ProfileState extends State<Profile> {
             height: 40,
             child: TextButton(
               onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) {
-                      return Filter(
-                        selected_filter: "sellers",
-                      );
-                    }));
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return Filter(
+                    selected_filter: "sellers",
+                  );
+                }));
               },
               style: TextButton.styleFrom(
                   splashFactory: NoSplash.splashFactory,
@@ -634,7 +631,6 @@ class _ProfileState extends State<Profile> {
       ),
     );
   }
-
 
   Widget buildSettingAndAddonsHorizontalMenu() {
     return Container(
@@ -860,7 +856,8 @@ class _ProfileState extends State<Profile> {
                   height: 40,
                   child: TextButton(
                     onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
                         return Wallet();
                       }));
                     },
@@ -883,8 +880,8 @@ class _ProfileState extends State<Profile> {
                         Text(
                           AppLocalizations.of(context).wallet_screen_my_wallet,
                           textAlign: TextAlign.center,
-                          style:
-                              TextStyle(color: MyTheme.dark_font_grey, fontSize: 12),
+                          style: TextStyle(
+                              color: MyTheme.dark_font_grey, fontSize: 12),
                         )
                       ],
                     ),
@@ -982,7 +979,8 @@ class _ProfileState extends State<Profile> {
                   height: 40,
                   child: TextButton(
                     onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
                         return Clubpoint();
                       }));
                     },
@@ -1006,8 +1004,8 @@ class _ProfileState extends State<Profile> {
                           AppLocalizations.of(context)
                               .club_point_screen_earned_points,
                           textAlign: TextAlign.center,
-                          style:
-                              TextStyle(color: MyTheme.dark_font_grey, fontSize: 12),
+                          style: TextStyle(
+                              color: MyTheme.dark_font_grey, fontSize: 12),
                         )
                       ],
                     ),
@@ -1029,7 +1027,8 @@ class _ProfileState extends State<Profile> {
                   height: 40,
                   child: TextButton(
                     onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
                         return RefundRequest();
                       }));
                     },
@@ -1053,8 +1052,8 @@ class _ProfileState extends State<Profile> {
                           AppLocalizations.of(context)
                               .refund_request_screen_refund_requests,
                           textAlign: TextAlign.center,
-                          style:
-                              TextStyle(color: MyTheme.dark_font_grey, fontSize: 12),
+                          style: TextStyle(
+                              color: MyTheme.dark_font_grey, fontSize: 12),
                         )
                       ],
                     ),
@@ -1096,8 +1095,8 @@ class _ProfileState extends State<Profile> {
                     Text(
                       AppLocalizations.of(context).main_drawer_messages,
                       textAlign: TextAlign.center,
-                      style:
-                          TextStyle(color: MyTheme.dark_font_grey, fontSize: 12),
+                      style: TextStyle(
+                          color: MyTheme.dark_font_grey, fontSize: 12),
                     )
                   ],
                 ),
@@ -1165,9 +1164,8 @@ class _ProfileState extends State<Profile> {
   }
 
   Widget buildTopSection() {
-
     return Container(
-     // color: Colors.amber,
+      // color: Colors.amber,
       alignment: Alignment.center,
       height: 48,
       child: Row(
@@ -1204,7 +1202,6 @@ class _ProfileState extends State<Profile> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,
-
             children: [
               Text(
                 "${user_name.$}",

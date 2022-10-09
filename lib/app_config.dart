@@ -2,8 +2,8 @@
 var this_year = DateTime.now().year.toString();
 
 class AppConfig {
-  static String copyright_text = "@ ActiveItZone " + this_year; //this shows in the splash screen
-  static String app_name = "Active eCommerce"; //this shows in the splash screen
+  static String copyright_text = "@ Greencart SA " + this_year; //this shows in the splash screen
+  static String app_name = "Greencart SA"; //this shows in the splash screen
   static String purchase_code = "9d356f83-1ee1-49bf-9b6b-3387c63b2fb2"; //enter your purchase code for the app from codecanyon
 
   //Default language config

@@ -73,17 +73,17 @@ class _SplashScreenState extends State<SplashScreen> {
           // mainAxisAlignment: MainAxisAlignment.start,
           // crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            CircleAvatar(
-              backgroundColor: Colors.transparent,
-              child: Hero(
-                tag: "backgroundImageInSplash",
-                child: Container(
-                  child: Image.asset(
-                      "assets/splash_login_registration_background_image.png"),
-                ),
-              ),
-              radius: 140.0,
-            ),
+            // CircleAvatar(
+            //   backgroundColor: Colors.transparent,
+            //   child: Hero(
+            //     tag: "backgroundImageInSplash",
+            //     child: Container(
+            //       child: Image.asset(
+            //           "assets/splash_login_registration_background_image.png"),
+            //     ),
+            //   ),
+            //   radius: 140.0,
+            // ),
             Positioned.fill(
               top: DeviceInfo(context).height/2-72,
               child: Column(
