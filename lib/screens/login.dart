@@ -48,15 +48,16 @@ class _LoginState extends State<Login> {
   @override
   void initState() {
     //on Splash Screen hide statusbar
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [SystemUiOverlay.bottom]);
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+        overlays: [SystemUiOverlay.bottom]);
     super.initState();
   }
 
   @override
   void dispose() {
     //before going to other screen show statusbar
-    SystemChrome.setEnabledSystemUIMode(
-        SystemUiMode.manual, overlays: [SystemUiOverlay.top, SystemUiOverlay.bottom]);
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+        overlays: [SystemUiOverlay.top, SystemUiOverlay.bottom]);
     super.dispose();
   }
 
@@ -560,7 +561,9 @@ class _LoginState extends State<Login> {
                           visible: true,
                           child: InkWell(
                             onTap: () {
-                              Platform.isIOS ? signInWithApple() : print("device is not ios");
+                              Platform.isIOS
+                                  ? signInWithApple()
+                                  : print("device is not ios");
                             },
                             child: Container(
                               width: 28,
