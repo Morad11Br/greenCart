@@ -254,13 +254,49 @@ class _LoginState extends State<Login> {
     final nonce = sha256ofString(rawNonce);
 
     // Request credential for the currently signed in Apple account.
-    final appleCredential = await SignInWithApple.getAppleIDCredential(
-      scopes: [
-        AppleIDAuthorizationScopes.email,
-        AppleIDAuthorizationScopes.fullName,
-      ],
-      nonce: nonce,
-    );
+
+    try {
+      final appleCredential = await SignInWithApple.getAppleIDCredential(
+        scopes: [
+          AppleIDAuthorizationScopes.email,
+          AppleIDAuthorizationScopes.fullName,
+        ],
+        nonce: nonce,
+      );
+
+      print(appleCredential.toString());
+      print("authorizationCode :${appleCredential.authorizationCode}");
+      print("givenName :${appleCredential.givenName}");
+      print("familyName :${appleCredential.familyName}");
+      print("identityToken :${appleCredential.identityToken}");
+      print("userIdentifier :${appleCredential.userIdentifier}");
+
+      String accessToken = appleCredential.identityToken;
+
+      var loginResponse = await AuthRepository().getSocialLoginResponse(
+          "apple",
+          appleCredential.givenName,
+          appleCredential.email,
+          appleCredential.userIdentifier,
+          access_token: accessToken);
+
+      if (loginResponse.result == false) {
+        print('-----------failed');
+        ToastComponent.showDialog(loginResponse.message,
+            gravity: Toast.center, duration: Toast.lengthLong);
+      } else {
+        print('-----------success');
+        ToastComponent.showDialog(loginResponse.message,
+            gravity: Toast.center, duration: Toast.lengthLong);
+        AuthHelper().setUserData(loginResponse);
+        Navigator.push(context, MaterialPageRoute(builder: (context) {
+          return Main();
+        }));
+      }
+    } on Exception catch (e) {
+      print("error is ....... $e");
+      // TODO
+    }
 
     // Create an `OAuthCredential` from the credential returned by Apple.
     // final oauthCredential = OAuthProvider("apple.com").credential(

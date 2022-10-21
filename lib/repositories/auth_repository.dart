@@ -11,6 +11,9 @@ import 'package:active_ecommerce_flutter/data_model/user_by_token.dart';
 import 'package:flutter/foundation.dart';
 import 'dart:convert';
 import 'package:active_ecommerce_flutter/helpers/shared_value_helper.dart';
+import 'package:to_curl/to_curl.dart';
+
+import '../data_model/google_regis_resp.dart';
 
 class AuthRepository {
   Future<LoginResponse> getLoginResponse(
@@ -39,7 +42,7 @@ class AuthRepository {
     email = email == ("null") ? "" : email;
 
     var post_body = jsonEncode(
-        {"name": "${name}", "email": email, "provider": "$provider","social_provider":"$social_provider","access_token":"$access_token"});
+        {"name": name, "email": email, "provider": "$provider","social_provider":"$social_provider","access_token":"$access_token"});
 
     Uri url = Uri.parse("${AppConfig.BASE_URL}/auth/social-login");
     final response = await http.post(url,
@@ -50,7 +53,40 @@ class AuthRepository {
         body: post_body);
     print(post_body);
     print(response.body.toString());
+    print("--------${response.statusCode}-----------");
+    print("URL : ${response.request.url}");
+    print("cURL : ${toCurl(response.request)}");
     return loginResponseFromJson(response.body);
+  }
+
+  Future<GoogleSignUpResponse> getGoogleRegisterResponse(
+      {@required String lastName,
+      @required String firstName,
+      @required String email}) async {
+    email = email == ("null") ? "" : email;
+    var postBody = {
+      "first_name": firstName,
+      "last_name": lastName,
+      "email": email,
+      "mobile": "",
+      "gender": "",
+      "date_birth": "",
+      "nationality": "",
+      "country": ""
+    };
+
+    Uri url = Uri.parse("https://greencard-sa.com/api/mobile/signup");
+
+    final response = await http.post(url,
+        headers: {
+          "Content-Tresponseype": "application/json",
+          "App-Language": app_language.$,
+        },
+        body: postBody);
+    print(postBody);
+    print(response.body);
+
+    return GoogleSignUpResponse.fromJson(jsonDecode(response.body));
   }
 
   Future<LogoutResponse> getLogoutResponse() async {

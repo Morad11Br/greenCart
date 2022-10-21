@@ -3,7 +3,7 @@ description: This is the flutter mobile application for active ecommerce cms
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 3.2.0+18
+version: 1.0.0+4
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
@@ -72,6 +72,7 @@ dependencies:
   route_transitions: ^2.0.1
   firebase_core: ^1.20.0
   flutter_local_notifications: ^9.7.0
+  to_curl: ^2.0.0-nullsafety.0
 
 
 dev_dependencies:
