@@ -12,12 +12,9 @@ import 'package:active_ecommerce_flutter/screens/main.dart';
 import 'package:active_ecommerce_flutter/screens/messenger_list.dart';
 import 'package:active_ecommerce_flutter/screens/whole_sale_products.dart';
 import 'package:active_ecommerce_flutter/screens/wishlist.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:active_ecommerce_flutter/my_theme.dart';
-import 'package:active_ecommerce_flutter/ui_sections/drawer.dart';
 import 'package:active_ecommerce_flutter/helpers/shared_value_helper.dart';
-import 'package:active_ecommerce_flutter/app_config.dart';
 import 'package:active_ecommerce_flutter/screens/wallet.dart';
 import 'package:active_ecommerce_flutter/screens/profile_edit.dart';
 import 'package:active_ecommerce_flutter/screens/address.dart';
@@ -25,8 +22,6 @@ import 'package:active_ecommerce_flutter/screens/order_list.dart';
 import 'package:active_ecommerce_flutter/screens/club_point.dart';
 import 'package:active_ecommerce_flutter/screens/refund_request.dart';
 import 'package:active_ecommerce_flutter/repositories/profile_repository.dart';
-import 'package:active_ecommerce_flutter/custom/toast_component.dart';
-import 'package:toast/toast.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Profile extends StatefulWidget {
@@ -109,9 +104,8 @@ class _ProfileState extends State<Profile> {
       }
     }
 
-    var newtxt = (txt == null || txt == "" || txt == null.toString())
-        ? blankZeros
-        : txt;
+    var newtxt =
+        (txt == null || txt == "" || txt == null.toString()) ? blankZeros : txt;
 
     // print(txt + " " + default_length.toString());
     // print(newtxt);
@@ -139,6 +133,42 @@ class _ProfileState extends State<Profile> {
     Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) {
       return Main();
     }), (route) => false);
+  }
+
+  void _showDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30),
+          ),
+          title: Text("Alert!"),
+          content: Text(
+              "if you proceed with the process, your account and all associated information will be removed, do you agree to this?"),
+          actions: <Widget>[
+            TextButton(
+              child: Text("confirm"),
+              onPressed: () async {
+                var deleteAccountResponse =
+                    await ProfileRepository().deleteAccount(access_token.$);
+                    print(deleteAccountResponse.message);
+                    print(deleteAccountResponse.result);
+                    if(deleteAccountResponse.result == true){
+                      onTapLogout(context);
+                    }
+              },
+            ),
+            TextButton(
+              child: Text("cancel"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -1068,13 +1098,64 @@ class _ProfileState extends State<Profile> {
           ),
           Visibility(
             visible: conversation_system_status.$,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  height: 40,
+                  child: TextButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return MessengerList();
+                          },
+                        ),
+                      );
+                    },
+                    style: TextButton.styleFrom(
+                        splashFactory: NoSplash.splashFactory,
+                        alignment: Alignment.center,
+                        padding: EdgeInsets.zero),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Image.asset(
+                          "assets/messages.png",
+                          width: 16,
+                          height: 16,
+                          color: MyTheme.dark_font_grey,
+                        ),
+                        SizedBox(
+                          width: 24,
+                        ),
+                        Text(
+                          AppLocalizations.of(context).main_drawer_messages,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              color: MyTheme.dark_font_grey, fontSize: 12),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+                Divider(
+                  thickness: 1,
+                  color: MyTheme.light_grey,
+                ),
+              ],
+            ),
+          ),
+          Visibility(
+            visible: conversation_system_status.$,
             child: Container(
               height: 40,
               child: TextButton(
                 onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return MessengerList();
-                  }));
+                  print("delete account ----- ${access_token.$}");
+
+                  _showDialog(context);
                 },
                 style: TextButton.styleFrom(
                     splashFactory: NoSplash.splashFactory,
@@ -1084,7 +1165,7 @@ class _ProfileState extends State<Profile> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Image.asset(
-                      "assets/messages.png",
+                      "assets/delete-account.png",
                       width: 16,
                       height: 16,
                       color: MyTheme.dark_font_grey,
@@ -1093,7 +1174,9 @@ class _ProfileState extends State<Profile> {
                       width: 24,
                     ),
                     Text(
-                      AppLocalizations.of(context).main_drawer_messages,
+                      // AppLocalizations.of(context).order_details_screen_city,
+
+                      'Delete Account',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           color: MyTheme.dark_font_grey, fontSize: 12),
