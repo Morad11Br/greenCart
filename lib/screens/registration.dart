@@ -42,15 +42,16 @@ class _RegistrationState extends State<Registration> {
   @override
   void initState() {
     //on Splash Screen hide statusbar
-    SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.bottom]);
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+        overlays: [SystemUiOverlay.bottom]);
     super.initState();
   }
 
   @override
   void dispose() {
     //before going to other screen show statusbar
-    SystemChrome.setEnabledSystemUIOverlays(
-        [SystemUiOverlay.top, SystemUiOverlay.bottom]);
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+        overlays: [SystemUiOverlay.top, SystemUiOverlay.bottom]);
     super.dispose();
   }
 
@@ -58,7 +59,7 @@ class _RegistrationState extends State<Registration> {
     var name = _nameController.text.toString();
     var email = _emailController.text.toString();
     var password = _passwordController.text.toString();
-    var password_confirm = _passwordConfirmController.text.toString();
+    var passwordConfirm = _passwordConfirmController.text.toString();
 
     if (name == "") {
       ToastComponent.showDialog(
@@ -84,7 +85,7 @@ class _RegistrationState extends State<Registration> {
           gravity: Toast.center,
           duration: Toast.lengthLong);
       return;
-    } else if (password_confirm == "") {
+    } else if (passwordConfirm == "") {
       ToastComponent.showDialog(
           AppLocalizations.of(context)
               .registration_screen_password_confirm_warning,
@@ -98,7 +99,7 @@ class _RegistrationState extends State<Registration> {
           gravity: Toast.center,
           duration: Toast.lengthLong);
       return;
-    } else if (password != password_confirm) {
+    } else if (password != passwordConfirm) {
       ToastComponent.showDialog(
           AppLocalizations.of(context)
               .registration_screen_password_match_warning,
@@ -111,7 +112,7 @@ class _RegistrationState extends State<Registration> {
         name,
         _register_by == 'email' ? email : _phone,
         password,
-        password_confirm,
+        passwordConfirm,
         _register_by);
 
     if (signupResponse.result == false) {
@@ -145,9 +146,10 @@ class _RegistrationState extends State<Registration> {
           await googleUser.authentication;
       String str = googleUser.displayName;
       var parts = str.split(':');
-      var firstName = parts[0].trim(); 
-      var lastName= parts.sublist(1).join(':').trim();
-      var googleSignUpResponse = await AuthRepository().getGoogleRegisterResponse(
+      var firstName = parts[0].trim();
+      var lastName = parts.sublist(1).join(':').trim();
+      var googleSignUpResponse =
+          await AuthRepository().getGoogleRegisterResponse(
         email: googleUser.email,
         firstName: firstName,
         lastName: lastName,
@@ -164,7 +166,7 @@ class _RegistrationState extends State<Registration> {
           return Login();
         }));
       }
-      
+
       GoogleSignIn().disconnect();
     } on Exception catch (e) {
       print("error is ....... $e");
@@ -174,21 +176,21 @@ class _RegistrationState extends State<Registration> {
 
   @override
   Widget build(BuildContext context) {
-    final _screen_height = MediaQuery.of(context).size.height;
-    final _screen_width = MediaQuery.of(context).size.width;
+    final ScreenHeight = MediaQuery.of(context).size.height;
+    final ScreenWidth = MediaQuery.of(context).size.width;
     return AuthScreen.buildScreen(
         context,
         "${AppLocalizations.of(context).registration_screen_join} " +
             AppConfig.app_name,
-        buildBody(context, _screen_width));
+        buildBody(context, ScreenWidth));
   }
 
-  Column buildBody(BuildContext context, double _screen_width) {
+  Column buildBody(BuildContext context, double ScreenWidth) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Container(
-          width: _screen_width * (3 / 4),
+          width: ScreenWidth * (3 / 4),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -448,7 +450,7 @@ class _RegistrationState extends State<Registration> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(top: 30.0,bottom: 10),
+                padding: const EdgeInsets.only(top: 30.0, bottom: 10),
                 child: Container(
                   height: 45,
                   child: FlatButton(
@@ -479,7 +481,42 @@ class _RegistrationState extends State<Registration> {
                 padding: const EdgeInsets.only(left: 30, right: 30, bottom: 5),
                 child: Divider(),
               ),
-              Center(
+              Container(
+                height: 45,
+                child: FlatButton(
+                  minWidth: MediaQuery.of(context).size.width,
+                  //height: 50,
+                  color: MyTheme.amber,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: const BorderRadius.all(
+                      Radius.circular(6.0),
+                    ),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        "assets/google_logo.png",
+                        height: MediaQuery.of(context).size.height * 0.04,
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Text(
+                        'Sign Up with Google',
+                        style: TextStyle(
+                            color: MyTheme.accent_color,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600),
+                      ),
+                    ],
+                  ),
+                  onPressed: () {
+                    onPressedGoogleRegister();
+                  },
+                ),
+              ),
+              /*Center(
                 child: InkWell(
                   onTap: () {
                     onPressedGoogleRegister();
@@ -489,7 +526,8 @@ class _RegistrationState extends State<Registration> {
                     child: Image.asset("assets/google_logo.png"),
                   ),
                 ),
-              ),
+              ),*/
+
               Padding(
                 padding: const EdgeInsets.only(top: 20.0),
                 child: Row(

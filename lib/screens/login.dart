@@ -1,3 +1,6 @@
+
+import 'dart:io';
+
 import 'package:active_ecommerce_flutter/app_config.dart';
 import 'package:active_ecommerce_flutter/my_theme.dart';
 import 'package:active_ecommerce_flutter/other_config.dart';
@@ -27,7 +30,6 @@ import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'dart:math';
 import 'package:crypto/crypto.dart';
 import 'dart:convert';
-import 'dart:io' show Platform;
 
 class Login extends StatefulWidget {
   @override
@@ -531,25 +533,108 @@ class _LoginState extends State<Login> {
                         fontWeight: FontWeight.w600),
                   ),
                   onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) {
-                      return Registration();
-                    }));
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return Registration();
+                        },
+                      ),
+                    );
                   },
                 ),
               ),
-              Visibility(
-                visible: allow_google_login.$ || allow_facebook_login.$,
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 20.0),
-                  child: Center(
-                      child: Text(
-                    AppLocalizations.of(context).login_screen_login_with,
-                    style: TextStyle(color: MyTheme.font_grey, fontSize: 12),
-                  )),
+              Padding(
+                padding: EdgeInsets.only(top: 10,bottom: 5),
+                child: Divider(),
+              ),
+              // Visibility(
+              //   visible: allow_google_login.$ || allow_facebook_login.$,
+              //   child: Padding(
+              //     padding: const EdgeInsets.only(top: 20.0, bottom: 10),
+              //     child: Center(
+              //         child: Text(
+              //      'Or',
+              //       style: TextStyle(color: MyTheme.font_grey, fontSize: 12),
+              //     )),
+              //   ),
+              // ),
+            Platform.isIOS?  
+            Container(
+                height: 45,
+                child: FlatButton(
+                  minWidth: MediaQuery.of(context).size.width,
+                  //height: 50,
+                  color: Colors.black,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: const BorderRadius.all(
+                      Radius.circular(6.0),
+                    ),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        "assets/apple_logo.png",
+                        height: MediaQuery.of(context).size.height * 0.04,
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Text(
+                        'Sign In with Apple',
+                        style: TextStyle(
+                            color: MyTheme.white,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600),
+                      ),
+                    ],
+                  ),
+                  onPressed: () {
+                    signInWithApple();
+                  },
+                ),
+              ) 
+              : SizedBox(),
+              SizedBox(
+                height: 5,
+              ),
+              Container(
+                height: 45,
+                child: FlatButton(
+                  minWidth: MediaQuery.of(context).size.width,
+                  //height: 50,
+                  color: MyTheme.amber,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: const BorderRadius.all(
+                      Radius.circular(6.0),
+                    ),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        "assets/google_logo.png",
+                        height: MediaQuery.of(context).size.height * 0.04,
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Text(
+                        'Sign In with Google',
+                        style: TextStyle(
+                            color: MyTheme.accent_color,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600),
+                      ),
+                    ],
+                  ),
+                  onPressed: () {
+                    onPressedGoogleLogin();
+                  },
                 ),
               ),
-              Padding(
+              /*Padding(
                 padding: const EdgeInsets.only(top: 15.0),
                 child: Center(
                   child: Container(
@@ -611,7 +696,7 @@ class _LoginState extends State<Login> {
                     ),
                   ),
                 ),
-              ),
+              ),*/
             ],
           ),
         )
