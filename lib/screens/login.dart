@@ -1,5 +1,4 @@
 
-import 'dart:io';
 
 import 'package:active_ecommerce_flutter/app_config.dart';
 import 'package:active_ecommerce_flutter/my_theme.dart';
@@ -559,81 +558,79 @@ class _LoginState extends State<Login> {
               //     )),
               //   ),
               // ),
-            Platform.isIOS?  
-            Container(
-                height: 45,
-                child: FlatButton(
-                  minWidth: MediaQuery.of(context).size.width,
-                  //height: 50,
-                  color: Colors.black,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: const BorderRadius.all(
-                      Radius.circular(6.0),
-                    ),
+            // Platform.isIOS?  
+            InkWell(
+                onTap: () {
+                  signInWithApple();
+                },
+                child: Container(
+                  height: 35,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(6.0),
+                    color: Colors.black,
                   ),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Image.asset(
-                        "assets/apple_logo.png",
-                        height: MediaQuery.of(context).size.height * 0.04,
-                      ),
                       SizedBox(
                         width: 10,
                       ),
+                      Image.asset(
+                        "assets/apple_logo.png",
+                        height: MediaQuery.of(context).size.height * 0.03,
+                      ),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.15,
+                      ),
                       Text(
-                        'Sign In with Apple',
+                        'Continue with Apple',
                         style: TextStyle(
                             color: MyTheme.white,
-                            fontSize: 16,
+                            fontSize: 14,
                             fontWeight: FontWeight.w600),
                       ),
                     ],
                   ),
-                  onPressed: () {
-                    signInWithApple();
-                  },
                 ),
-              ) 
-              : SizedBox(),
+              ),
+            
+              // : SizedBox(),
               SizedBox(
                 height: 5,
               ),
-              Container(
-                height: 45,
-                child: FlatButton(
-                  minWidth: MediaQuery.of(context).size.width,
-                  //height: 50,
-                  color: MyTheme.amber,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: const BorderRadius.all(
-                      Radius.circular(6.0),
-                    ),
+              InkWell(
+                onTap: () {
+                  onPressedGoogleLogin();
+                },
+                child: Container(
+                  height: 35,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(6.0),
+                    color: Colors.grey[600],
                   ),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Image.asset(
-                        "assets/google_logo.png",
-                        height: MediaQuery.of(context).size.height * 0.04,
-                      ),
                       SizedBox(
                         width: 10,
                       ),
+                      Image.asset(
+                        "assets/google_logo.png",
+                        height: MediaQuery.of(context).size.height * 0.03,
+                      ),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.15,
+                      ),
                       Text(
-                        'Sign In with Google',
+                        'Continue with Google',
                         style: TextStyle(
-                            color: MyTheme.accent_color,
-                            fontSize: 16,
+                            color: MyTheme.white,
+                            fontSize: 14,
                             fontWeight: FontWeight.w600),
                       ),
                     ],
                   ),
-                  onPressed: () {
-                    onPressedGoogleLogin();
-                  },
                 ),
               ),
+              
               /*Padding(
                 padding: const EdgeInsets.only(top: 15.0),
                 child: Center(

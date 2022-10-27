@@ -481,39 +481,37 @@ class _RegistrationState extends State<Registration> {
                 padding: const EdgeInsets.only(left: 30, right: 30, bottom: 5),
                 child: Divider(),
               ),
-              Container(
-                height: 45,
-                child: FlatButton(
-                  minWidth: MediaQuery.of(context).size.width,
-                  //height: 50,
-                  color: MyTheme.amber,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: const BorderRadius.all(
-                      Radius.circular(6.0),
-                    ),
+              InkWell(
+                onTap: () {
+                  onPressedGoogleRegister();
+                },
+                child: Container(
+                  height: 45,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(6.0),
+                    color: Colors.grey[600],
                   ),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Image.asset(
-                        "assets/google_logo.png",
-                        height: MediaQuery.of(context).size.height * 0.04,
-                      ),
                       SizedBox(
                         width: 10,
                       ),
+                      Image.asset(
+                        "assets/google_logo.png",
+                        height: MediaQuery.of(context).size.height * 0.03,
+                      ),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.15,
+                      ),
                       Text(
-                        'Sign Up with Google',
+                        'Continue with Google',
                         style: TextStyle(
-                            color: MyTheme.accent_color,
-                            fontSize: 16,
+                            color: MyTheme.white,
+                            fontSize: 14,
                             fontWeight: FontWeight.w600),
                       ),
                     ],
                   ),
-                  onPressed: () {
-                    onPressedGoogleRegister();
-                  },
                 ),
               ),
               /*Center(
